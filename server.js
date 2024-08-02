@@ -35,7 +35,7 @@ app.get('/bfhl', (req, res) => {
     });
 });
 
-// Add a simple route for the root URL
+
 app.get('/', (req, res) => {
     res.send('Welcome to the BFHL backend!');
 });
