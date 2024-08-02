@@ -8,7 +8,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
-const userID = 'samvardhan_singh_03112003'; 
+const userID = 'student_name_ddmmyyyy'; // Replace with your actual full name and DOB
 const email = 'sj7873@srmist.edu.in';
 const rollNumber = 'RA2111043020005';
 
@@ -33,6 +33,11 @@ app.get('/bfhl', (req, res) => {
     res.status(200).json({
         operation_code: 1
     });
+});
+
+// Add a simple route for the root URL
+app.get('/', (req, res) => {
+    res.send('Welcome to the BFHL backend!');
 });
 
 app.listen(PORT, () => {
