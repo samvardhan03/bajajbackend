@@ -8,15 +8,30 @@ app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
-const userID = 'student_name_ddmmyyyy'; // Replace with your actual full name and DOB
+// Example user data
+const userID = 'student_name_ddmmyyyy'; 
 const email = 'sj7873@srmist.edu.in';
 const rollNumber = 'RA2111043020005';
 
 app.post('/bfhl', (req, res) => {
     const { data } = req.body;
-    const numbers = data.filter(item => !isNaN(item));
-    const alphabets = data.filter(item => isNaN(item));
-    const highestAlphabet = alphabets.length > 0 ? [alphabets.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })).pop()] : [];
+
+    
+    if (!Array.isArray(data)) {
+        return res.status(400).json({
+            is_success: false,
+            error: 'Invalid input format. Expected an array of strings.'
+        });
+    }
+
+    
+    const numbers = data.filter(item => !isNaN(item) && item.trim() !== '');
+    const alphabets = data.filter(item => isNaN(item) && item.trim() !== '');
+
+
+    const highestAlphabet = alphabets.length > 0 
+        ? [alphabets.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })).pop()] 
+        : [];
 
     res.json({
         is_success: true,
@@ -34,7 +49,6 @@ app.get('/bfhl', (req, res) => {
         operation_code: 1
     });
 });
-
 
 app.get('/', (req, res) => {
     res.send('Welcome to the BFHL backend!');
